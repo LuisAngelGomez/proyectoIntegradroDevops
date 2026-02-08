@@ -1,3 +1,114 @@
-.userbutton {
-    
+:root {
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+    --card-bg: #1A1A1A; /* Color oscuro del cardholder */
+    --text-white: #FFFFFF;
+    --text-gray: #A0A0A0;
+    --line-color: #444444; /* Color de las líneas de los inputs */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('fondo.jpg'); 
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 0 0 0 2000px var(--bg-overlay);
+}
+
+.login-card {
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 350px;
+    padding: 25px 35px; /* Altura más baja y compacta  */
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    max-width: 130px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 2px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    text-transform: uppercase;
+}
+
+/* ENTRADAS DE TEXTO SIN FONDO (ESTILO LÍNEA) */
+input {
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid var(--line-color);
+    background-color: transparent; /* Coincide con el fondo del cardholder */
+    font-size: 0.95rem;
+    color: var(--text-white);
+    transition: border-bottom-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-bottom-color: var(--text-white);
+}
+
+/* BOTÓN BLANCO CON LETRA EN NEGRITA */
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 800; /* Negrita */
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-login:hover {
+    transform: scale(1.02);
+}
+
+.login-footer {
+    margin-top: 15px;
+}
+
+.forgot-link, .create-link, .signup-text {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.signup-text {
+    margin-top: 10px;
+}
+
+.create-link {
+    font-weight: bold;
+    color: #FFFFFF;
 }
