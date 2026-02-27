@@ -1,0 +1,36 @@
+services:
+  # Contenedor con servicio Js
+  app:
+    image: node:20
+    user: "node"
+    container_name: durango_web_js
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - "3000:3000" # Link: http://localhost:3000
+    command: bash -c "npm install && npm start"
+    depends_on:
+      - db
+    networks:
+      - durango_network
+
+  # Base de datos
+  db:
+    image: mysql:8.0
+    container_name: durango_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: durango
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 4213
+    ports:
+      - "3307:3306"
+    networks:
+      - durango_network
+
+networks:
+  durango_network:
+    driver: bridge
+
