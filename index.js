@@ -1,63 +1,60 @@
 const express = require('express');
+const mysql = require('mysql2/promise');
 const path = require('path');
-const db = require('./db');
 const app = express();
+const port = 3000;
 
-// Configuración para leer datos de formularios
-app.use(express.urlencoded({ extended: true }));
+//Configuración de la Base de Datos 
+const db = mysql.createPool({
+  host: 'db',         // Nombre del servicio en tu docker-compose
+  user: 'root',       // Usuario maestro
+  password: 'root',   // Contraseña
+  database: 'durango',
+  waitForConnections: true,
+  connectionLimit: 10
+});
+
+// Middlewares 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Servir tus archivos estáticos (CSS, Imágenes)
+// Servir archivos estáticos (HTML, CSS, JS del frontend) desde la carpeta actual
 app.use(express.static(path.join(__dirname)));
 
-// Ruta principal (Carga tu index.html)
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Ruta para el Login (Lógica que estaba en login.php)
+// Ruta para el REGISTRO (Signup)
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const [rows] = await db.query('SELECT * FROM usuarios WHERE nombre = ? AND password = ?', [username, password]);
-    if (rows.length > 0) {
-      res.send(`<h1>Bienvenido ${username}, acceso concedido.</h1>`);
-    } else {
-      res.status(401).send('Credenciales incorrectas');
-    }
-  } catch (error) {
-    res.status(500).send('Error en el servidor: ' + error.message);
-  }
-});
-
-// Ruta para el Registro (Equivalente a tu signup.php)
-app.post('/signin', async (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.send("Por favor llena todos los campos.");
-    }
-
+    const { nombre, password, email } = req.body;
     try {
-        // 1. Verificamos si el usuario ya existe
-        const [rows] = await db.query('SELECT COUNT(*) as total FROM usuarios WHERE nombre = ?', [username]);
-        
-        if (rows[0].total > 0) {
-            return res.send("<script>alert('El usuario ya existe. Intenta con otro.'); window.location='/signup.html';</script>");
-        }
-
-        // 2. Insertamos el nuevo usuario
-        await db.query('INSERT INTO usuarios (nombre, password) VALUES (?, ?)', [username, password]);
-        
-        // Mensaje de éxito y redirección
-        res.send("<script>alert('Registro exitoso. Ya puedes iniciar sesión.'); window.location='/';</script>");
-
+        const sql = "SELECT * FROM usuarios WHERE nombre = ? AND password = ?";
+        "SELECT * FROM usuarios WHERE nombre = ? AND password = ?"
+        await db.query(sql, [nombre, password, email]);
+        res.redirect("/suscripciones.html");
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error en la base de datos: " + error.message);
+        console.error("Error en el registro:", error);
+        res.status(500).send("Error al registrar: " + error.message);
     }
 });
 
-app.listen(3000, () => {
-  console.log('Servidor Durango corriendo en http://localhost:3000');
+// Ruta para el LOGIN (Signin)
+app.post('/signin', async (req, res) => {
+    const { nombre, password } = req.body;
+    try {
+        // Buscamos por la columna nombre que creamos en MySQL
+        const sql = "INSERT INTO usuarios (nombre, password, email) VALUES (?, ?, ?)";
+        const [rows] = await db.query(sql, [nombre, password]);
+
+        if (rows.length > 0) {
+            res.send(`<h1>Bienvenido de nuevo, ${rows[0].nombre}</h1>`);
+        } else {
+            res.status(401).send('<h1>Usuario o contraseña incorrectos</h1><a href="/home.php">Volver a intentar</a>');
+        }
+    } catch (error) {
+        console.error("Error en el login:", error);
+        res.status(500).send("Error en el servidor: " + error.message);
+    }
+});
+
+// Iniciar el servidor
+app.listen(port, () => {
+  console.log(`Servidor Durango corriendo en http://localhost:${port}`);
 });
