@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DURANGO - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+   <nav class="sidebar">
+    <header>
+        <img src="logo.png" alt="Logo DURANGO" class="logo-img">
+    </header>
+    <ul class="nav-menu">
+        <li><a href="home.html">Inicio</a></li>
+        <li><a href="#">Mis Equipos</a></li>
+        <li><a href="#">Soporte Técnico</a></li>
+        <li><a href="suscripciones.html">Suscripciones</a></li>
+        <li class="logout"><a href="index.html">Cerrar Sesión</a></li>
+    </ul>
+</nav>
+
+    <main class="dashboard-content">
+        <header class="content-header">
+            <h1>Panel de Control</h1>
+            <p>Bienvenida de nuevo a DURANGO.</p><br>
+        </header>
+
+        <section class="status-summary">
+      <div class="sub-status-card">
+    <div class="status-text">
+        <h3>Estado de tu cuenta</h3>
+        <p id="subscription-info" class="loading-text">Consultando servidor...</p>
+    </div>
+    <a href="suscripciones.html" class="btn-minimal small-btn">Gestionar Plan</a>
+</div>
+
+        </section>
+        
+    </main>
+  <script>
+    async function actualizarEstado() {
+        try {
+            const response = await fetch('/api/plan-actual');
+            const data = await response.json();
+            const info = document.getElementById('subscription-info');
+
+            console.log("Datos recibidos de la BD:", data); 
+
+            if (data.plan && data.plan !== 'Ninguno') {
+                info.innerHTML = `${data.plan} <span class="active-status">ACTIVO</span>`;
+                info.style.color = "var(--text-main)";
+            } else {
+                info.innerHTML = `INACTIVO`;
+                info.style.color = "#ff4d4d"; 
+            }
+        } catch (error) {
+            console.error("Error al conectar con la API:", error);
+            document.getElementById('subscription-info').innerText = "Error de conexión";
+        }
+    }
+
+
+    window.onload = actualizarEstado;
+</script>
+</body>
+</html>

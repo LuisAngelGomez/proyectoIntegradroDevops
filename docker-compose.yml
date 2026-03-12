@@ -25,6 +25,7 @@ services:
       MYSQL_DATABASE: durango
       MYSQL_USER: user
       MYSQL_PASSWORD: 4213
+      
     ports:
       - "3307:3306"
     networks:
@@ -34,3 +35,5 @@ networks:
   durango_network:
     driver: bridge
 
+volumes:
+  mysql_data: 

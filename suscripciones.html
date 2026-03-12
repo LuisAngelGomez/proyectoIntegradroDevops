@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DURANGO - Suscripciones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <nav class="sidebar">
+    <header>
+        <img src="logo.png" alt="Logo DURANGO" class="logo-img">
+    </header>
+    <ul class="nav-menu">
+        <li><a href="home.html">Inicio</a></li>
+        <li><a href="#">Mis Equipos</a></li>
+        <li><a href="#">Soporte Técnico</a></li>
+        <li><a href="suscripciones.html">Suscripciones</a></li>
+        <li class="logout"><a href="index.html">Cerrar Sesión</a></li>
+    </ul>
+</nav>
+    <div id="sidebar-container">
+        </div>
+
+    <main class="dashboard-content">
+        <header class="content-header">
+            <h1>Planes Disponibles</h1>
+            <p>Selecciona el nivel de protección que necesitas contratar.</p>
+        </header>
+
+        <div class="plans-container">
+            <div class="plan-card">
+                <h3>Plan Básico</h3>
+                <p class="plan-price">$299<span class="price-period">/mes</span></p>
+                <ul class="plan-features">
+                    <li>2 Equipos Monitoreados</li>
+                    <li>Soporte Técnico 8/5</li>
+                </ul>
+               <form action="/contratar" method="POST">
+    <input type="hidden" name="plan" value="Básico">
+    <button type="submit" class="btn-minimal" onclick="alert('¡Gracias por contratar el plan Básico!')">
+        Contratar Ahora
+    </button>
+</form>
+            </div>
+
+            <div class="plan-card">
+                <h3>Plan Pro</h3>
+                <p class="plan-price">$599<span class="price-period">/mes</span></p>
+                <ul class="plan-features">
+                    <li>10 Equipos Monitoreados</li>
+                    <li>Soporte Técnico 24/7</li>
+                </ul>
+                <form action="/contratar" method="POST">
+                <input type="hidden" name="plan" value="Pro">
+                <button type="submit" class="btn-minimal" onclick = "alert('Gracias por contratar el plan Pro')"
+                    >Contratar Ahora</button></form>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
