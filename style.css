@@ -21,71 +21,88 @@ html {
 }
 
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     color: var(--text-main);
-    display: flex;
-    justify-content: center;
-    align-items: center;    
+    min-height: 100vh;
     background-color: var(--bg-overlay);
 }
 
-/* login y signup */
-
-/* containers de los cards */
-.auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.login-card, .signup-card {
-   background-color: var(--card-bg);
+/* vistas login y signin*/
+.login-card {
+    background-color: var(--card-bg);
     width: 90%;
     max-width: 360px;
     padding: 40px;
     border-radius: 24px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     text-align: center;
+    /* Centrado perfecto */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
 }
 
 .logo-img {
     width: 130px;
+/* sidebar */
+.sidebar .logo-img {
+    max-width: 130px; 
     height: auto;
     margin-bottom: 30px;
-}
-
-.form-group {
-    margin-bottom: 25px;
-    text-align: left;
-}
-
-.form-group label {
     display: block;
-    font-size: 0.8rem;
+    margin: 0 auto 30px auto; 
+}
+
+/* estado de suscripcion- */
+.status-summary {
+    margin-bottom: 40px;
+}
+
+.sub-status-card {
+    background: rgba(255, 255, 255, 0.05); 
+    border: 1px solid var(--border-line);
+    padding: 25px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.status-text h3 {
+    font-size: 1.1rem;
     color: var(--text-dim);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.status-text p {
+    font-size: 1.5rem;
     font-weight: 700;
 }
 
-/* inputs */
+.active-status {
+    color: #2ecc71; 
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+.small-btn {
+    width: auto;
+    padding: 10px 25px;
+    font-size: 0.85rem;
+}
+
 input {
     width: 100%;
     padding: 12px 0;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid var(--border-line);
     background: transparent;
-    color: var(--text-main);
+    color: white;
     font-size: 1rem;
-    transition: border-color 0.3s;
 }
 
 input:focus {
@@ -93,54 +110,14 @@ input:focus {
     border-bottom-color: var(--accent-white);
 }
 
-/* botones principales de acceso */
-.btn-login, .btn-signin {
-    width: 100%;
-    padding: 16px;
-    background-color: var(--accent-white);
-    color: var(--sidebar-bg);
-    border: none;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-}
-
-.btn-login:hover, .btn-signin:hover {
-    background-color: var(--text-dim);
-    transform: translateY(-2px);
-}
-
-/* footer de los Cards */
-.login-footer {
-    margin-top: 30px;
-}
-
-.signup-text {
-    color: var(--text-dim) !important;
-    font-size: 0.85rem;
-}
-
-.create-link, .forgot-link {
-    color: var(--accent-white) !important;
-    font-weight: 700;
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent-white);
-    padding-bottom: 2px;
-    margin-left: 5px;
-}
-
-/* estructura dashboard*/
-
+/* estructura del dahsboard */
 .dashboard-body {
     display: flex;
     min-height: 100vh;
+    background: transparent;
 }
 
+/* sidebar */
 .sidebar {
     width: 260px;
     background-color: var(--sidebar-bg);
@@ -153,52 +130,16 @@ input:focus {
     top: 0;
 }
 
-.sidebar .logo-img {
-    max-width: 120px;
-    margin: 0 auto 40px auto;
-}
-
 .dashboard-content {
     flex: 1;
     padding: 60px;
-    background-color: rgba(10, 10, 10, 0.4); 
-    backdrop-filter: blur(8px); 
+    background-color: rgba(10, 10, 10, 0.6); 
+    backdrop-filter: blur(5px); 
 }
 
-/* card suscripcion*/
-.sub-status-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-line);
-    padding: 30px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.status-text h3 {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-}
-
-.status-text p {
-    font-size: 1.6rem;
-    font-weight: 700;
-}
-
-.active-status {
-    color: #2ecc71; 
-    text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
-}
-
-/* nav_bar */
 .nav-menu {
     list-style: none;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .nav-menu a {
@@ -208,14 +149,15 @@ input:focus {
     display: block;
     border-radius: 12px;
     margin-bottom: 8px;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .nav-menu a:hover, .nav-menu a.active {
     background-color: var(--card-bg);
     color: var(--text-main);
 }
-/*cards de suscripciones*/
+
+/* suscripciones tarjetas*/
 .plans-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -241,18 +183,6 @@ input:focus {
     border: 1px solid var(--accent-white);
     background: linear-gradient(145deg, #1a1a1a, #222222);
 }
-.active-status {
-    color: #2ecc71; 
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: rgba(46, 204, 113, 0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-left: 15px;
-    vertical-align: middle;
-    text-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
-}
 
 .plan-price {
     font-size: 2.8rem;
@@ -271,27 +201,40 @@ input:focus {
 .plan-features li {
     margin-bottom: 12px;
 }
-/* botones de contratar o mejorar plan */
+
+/*botones*/
 .btn-minimal {
-    background-color: var(--sidebar-bg);
-    color: var(--accent-white) !important;
-    border: 1px solid var(--accent-white);
-    padding: 12px 24px;
-    border-radius: 30px;
+    display: block;
+    width: 100%;            
+    background-color: #000000;
+    color: #FFFFFF !important;
+    
+    border: 1px solid var(--border-line);
+    padding: 14px;
+    
+    text-align: center;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 700;
     text-transform: uppercase;
-    transition: all 0.3s;
+    letter-spacing: 1px;
+    
+    border-radius: 30px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .btn-minimal:hover {
-    background-color: var(--accent-white);
-    color: var(--sidebar-bg) !important;
+    background-color: #FFFFFF;
+    color: #000000 !important;
+    border-color: #FFFFFF;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
-.small-btn {
+.btn-minimal.small-btn {
     width: auto;
     display: inline-block;
+    padding: 10px 25px;
+    font-size: 0.8rem;
 }

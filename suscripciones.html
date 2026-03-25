@@ -7,18 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dashboard-body">
-    <nav class="sidebar">
-    <header>
-        <img src="logo.png" alt="Logo DURANGO" class="logo-img">
-    </header>
-    <ul class="nav-menu">
-        <li><a href="home.html">Inicio</a></li>
-        <li><a href="#">Mis Equipos</a></li>
-        <li><a href="#">Soporte Técnico</a></li>
-        <li><a href="suscripciones.html">Suscripciones</a></li>
-        <li class="logout"><a href="index.html">Cerrar Sesión</a></li>
-    </ul>
-</nav>
+    
     <div id="sidebar-container">
         </div>
 
@@ -36,25 +25,19 @@
                     <li>2 Equipos Monitoreados</li>
                     <li>Soporte Técnico 8/5</li>
                 </ul>
-               <form action="/contratar" method="POST">
-    <input type="hidden" name="plan" value="Básico">
-    <button type="submit" class="btn-minimal" onclick="alert('¡Gracias por contratar el plan Básico!')">
-        Contratar Ahora
-    </button>
-</form>
+                <button class="btn-minimal" onclick = "alert('Gracias por contratar el plan normal, eres noob')"
+                    >Contratar Ahora</button>
             </div>
 
-            <div class="plan-card">
+            <div class="plan-card active-plan-card">
                 <h3>Plan Pro</h3>
                 <p class="plan-price">$599<span class="price-period">/mes</span></p>
                 <ul class="plan-features">
                     <li>10 Equipos Monitoreados</li>
                     <li>Soporte Técnico 24/7</li>
                 </ul>
-                <form action="/contratar" method="POST">
-                <input type="hidden" name="plan" value="Pro">
-                <button type="submit" class="btn-minimal" onclick = "alert('Gracias por contratar el plan Pro')"
-                    >Contratar Ahora</button></form>
+                <button class="btn-minimal" onclick = "alert('Gracias por contratar el plan pro, eres pro')"
+                    >Contratar Ahora</button>
             </div>
         </div>
     </main>

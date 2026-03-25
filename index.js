@@ -17,73 +17,59 @@ const db = mysql.createPool({
 // Middlewares 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-
+// Servir tus archivos estáticos (CSS, Imágenes)
 app.use(express.static(path.join(__dirname)));
 
-// Ruta para el login
+// Ruta principal (Carga tu index.html)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Ruta para el Login (Lógica que estaba en login.php)
 app.post('/login', async (req, res) => {
-    const { nombre, password } = req.body;
-    
-    try {
-     
-        const sql = "SELECT * FROM usuarios WHERE nombre = ? AND password = ?";
-        const [rows] = await db.query(sql, [nombre, password]);
-
-        if (rows.length > 0) {
-            res.redirect("/home.html");
-        } else {
-            res.status(401).send("<script>alert('Usuario o contraseña incorrectos'); window.location='/';</script>");
-        }
-    } catch (error) {
-        console.error("Error en login:", error);
-        res.status(500).send("Error en el servidor");
+  const { username, password } = req.body;
+  try {
+    const [rows] = await db.query('SELECT * FROM usuarios WHERE nombre = ? AND password = ?', [username, password]);
+    if (rows.length > 0) {
+      res.send(`<h1>Bienvenido ${username}, acceso concedido.</h1>`);
+    } else {
+      res.status(401).send('Credenciales incorrectas');
     }
+  } catch (error) {
+    res.status(500).send('Error en el servidor: ' + error.message);
+  }
 });
 
-// Ruta para el signup
+// Ruta para el Registro (Equivalente a tu signup.php)
 app.post('/signin', async (req, res) => {
-    const { nombre, password, email } = req.body;
-    
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.send("Por favor llena todos los campos.");
+    }
+
     try {
-   
-        const sql = "INSERT INTO usuarios (nombre, password, email) VALUES (?, ?, ?)";
-        await db.query(sql, [nombre, password, email]);
+        // 1. Verificamos si el usuario ya existe
+        const [rows] = await db.query('SELECT COUNT(*) as total FROM usuarios WHERE nombre = ?', [username]);
         
-     
-        res.send("<script>alert('¡Cuenta creada exitosamente!'); window.location='/';</script>");
-    } catch (error) {
-        console.error("Error en registro:", error);
-        res.status(500).send("Error al registrar: " + error.message);
-    }
-});
+        if (rows[0].total > 0) {
+            return res.send("<script>alert('El usuario ya existe. Intenta con otro.'); window.location='/signup.html';</script>");
+        }
 
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor Durango corriendo en http://localhost:${port}`);
-});
-app.post('/contratar', async (req, res) => {
-    const { plan } = req.body;
-
-    const usuario = "estela"; 
-
-    try {
-
-        await db.query("UPDATE usuarios SET plan = ?, plan_estatus = 'Activo' WHERE nombre = ?", [plan, usuario]);
+        // 2. Insertamos el nuevo usuario
+        await db.query('INSERT INTO usuarios (nombre, password) VALUES (?, ?)', [username, password]);
         
-        // se redirige al home pasando los datos para que el script los lea
-        res.redirect(`/home.html?plan=${plan}&status=Activo`);
+        // Mensaje de éxito y redirección
+        res.send("<script>alert('Registro exitoso. Ya puedes iniciar sesión.'); window.location='/';</script>");
+
     } catch (error) {
-        res.status(500).send("Error al actualizar suscripción: " + error.message);
+        console.error(error);
+        res.status(500).send("Error en la base de datos: " + error.message);
     }
 });
 
-// index.js
-app.get('/api/plan-actual', async (req, res) => {
-    try {
-        const [rows] = await db.query("SELECT plan FROM usuarios ORDER BY id DESC LIMIT 1");
-        res.json({ plan: rows[0]?.plan || 'Ninguno' });
-    } catch (err) {
-        res.status(500).json({ error: "Error de BD" });
-    }
+app.listen(3000, () => {
+  console.log('Servidor Durango corriendo en http://localhost:3000');
 });
