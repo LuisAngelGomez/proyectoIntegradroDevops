@@ -2,9 +2,9 @@ name: Backend CI - Durango
 
 on:
   push:
-    branches: [ "luis---backend" ] # Solo vigila tu rama
+    branches: [ "luis---backend" ] # Solo vigila mi rama
   pull_request:
-    branches: [ "master" ] # Se activa si intentas fusionar con la principal
+    branches: [ "master" ] # Se activa si se intenta fusionar con la principal
 
 jobs:
   test-backend:
