@@ -1,0 +1,25 @@
+name: Backend CI - Durango
+
+on:
+  push:
+    branches: [ "luis---backend" ] # Solo vigila tu rama
+  pull_request:
+    branches: [ "master" ] # Se activa si intentas fusionar con la principal
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Validar Sintaxis index.js
+        run: node --check index.js
