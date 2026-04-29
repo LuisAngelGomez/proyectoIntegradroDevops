@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: durango-web
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: durango-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: durango-web
+spec:
+  selector:
+    matchLabels:
+      app: durango-app
+  template:
+    metadata:
+      labels:
+        app: durango-app
+    spec:
+      containers:
+      - name: durango-app
+        image: 0estelagf7/durango_web_js:v1
+        ports:
+        - containerPort: 3000
